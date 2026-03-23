@@ -42,11 +42,18 @@ import java.util.Date;
 @TeleOp
 
 public class BasicOpmodetutorial extends OpMode {
-    /* Declare OpMode members. */
+    private DcMotor LeftDrive;
+    private DcMotor RightDrive;
+    private Servo Intake;
+
 
 
     @Override
     public void init() {
+        LeftDrive = hardwareMap.get(DcMotor.class, "LeftDrive");
+        RightDrive = hardwareMap.get(DcMotor.class, "RightDrive");
+        Serve = hardwareMap.get(Servo.class, "Intake");
+
         telemetry.addData("Status", "Initialized");
 
     }
@@ -63,7 +70,19 @@ public class BasicOpmodetutorial extends OpMode {
      */
     @Override
     public void start() {
-
+    double tgtPower = 0;
+    while (opModeIsActive()) {
+        tgtPower = -this.gaempad1.left_stick_y;
+        LeftDrive.setPower(tgtPower);
+        telementry.addData("Target Power", tgtPower);
+        telemetry.addData("Motor Power", LeftDrive.getPower());
+        telementry.addData("Status, "Running");
+        
+        tgtPower = -this.gaempad1.right_stick_y;
+        RightDrive.setPower(tgtPower);
+        telementry.addData("Target Power", tgtPower);
+        telemetry.addData("Motor Power", RightDrive.getPower());
+        telementry.addData("Status, "Running");
     }
 
     /*
